@@ -68,27 +68,27 @@ api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 ## 1. Set up the caching pattern start -- the dictionary and the try/except
 ## 		statement shown in class.
 CACHE_FNAME = "SI206_HW7_cache.json"
-try:
+try: #try to run the cache file
 	cache_file = open(CACHE_FNAME,'r')
 	cache_text = cache_file.read()
 	cache_file.close()
-	CACHE_DICTION = json.loads(cache_text)
-except:
+	CACHE_DICTION = json.loads(cache_text) #json.load to read and it will put into dictionary
+except: #but if not put it into a dictionary
 	CACHE_DICTION = {}
 
-def cache_():
-	user_input=input('Enter phrase')
+def cache_():#look in caching data
+	user_input=input('Enter phrase') #prompt the user to enter statement
 	try:
-		fileone= open('{}.txt'.format(user_input), 'r')
-		return json.loads(fileone.read())
+		fileone= open('{}.txt'.format(user_input), 'r') #read the user input
+		return json.loads(fileone.read()) #return the text
 	except:
-		public_tweets = api.search(q=user_input)
-		filetwo= open('{}.txt'.format(user_input), 'w')
-		filetwo.write(json.dumps(public_tweets))
-		return public_tweets
-data= cache_()
-for single_tweet in data["statuses"][:5]:
-    print ('TEXT:', single_tweet['text'])
+		public_tweets = api.search(q=user_input) #search all tweets for the user's input
+		filetwo= open('{}.txt'.format(user_input), 'w') #open all texts that are found and save them to filetwo
+		filetwo.write(json.dumps(public_tweets)) #for all texts in file two, create a string with all public tweets found
+		return public_tweets #return public tweets
+information=cache_()
+for single_tweet in information["statuses"][:5]: #create for loop to loop through all the data (in range 6) and return the tweet that contains out input
+    print ('TEXT:', single_tweet['text']) #output should be in this format
     print ('CREATED AT:', single_tweet['created_at'])
     print ()
 
